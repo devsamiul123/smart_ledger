@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ledger/models/order_model.dart';
 import 'package:smart_ledger/screens/add_customer_screen.dart';
+import 'package:smart_ledger/screens/add_product_screen.dart'; // Add this import
 import 'package:smart_ledger/services/api_service.dart';
 
 class SalesScreen extends StatefulWidget {
   const SalesScreen({super.key});
-
   @override
   State<SalesScreen> createState() => _SalesScreenState();
 }
@@ -50,10 +50,6 @@ class _SalesScreenState extends State<SalesScreen> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                'Orders',
-                style: Theme.of(context).textTheme.titleLarge,
-              ),
               ElevatedButton.icon(
                 onPressed: () {
                   Navigator.push(
@@ -65,6 +61,23 @@ class _SalesScreenState extends State<SalesScreen> {
                 },
                 icon: const Icon(Icons.person_add),
                 label: const Text('Add Customer'),
+              ),
+              // Updated Add Product button with proper navigation
+              ElevatedButton.icon(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AddProductScreen(),
+                    ),
+                  ).then((_) {
+                    // Refresh orders when returning from the Add Product screen
+                    // If you also want to refresh product data, you can add that here
+                    _fetchOrders();
+                  });
+                },
+                icon: const Icon(Icons.add_shopping_cart),
+                label: const Text('Add Product'),
               ),
             ],
           ),
@@ -80,7 +93,6 @@ class _SalesScreenState extends State<SalesScreen> {
     if (_isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
-
     if (_errorMessage != null) {
       return Center(
         child: Column(
@@ -96,11 +108,9 @@ class _SalesScreenState extends State<SalesScreen> {
         ),
       );
     }
-
     if (_orders.isEmpty) {
       return const Center(child: Text('No orders found'));
     }
-
     return RefreshIndicator(
       onRefresh: _fetchOrders,
       child: ListView.builder(
