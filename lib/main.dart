@@ -1,20 +1,28 @@
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:smart_ledger/theme/app_theme.dart';
-import 'package:smart_ledger/screens/home_screen.dart';
+import 'package:provider/provider.dart';
+import 'package:smart_ledger/auth/auth_wrapper.dart';
+import 'package:smart_ledger/auth/services/auth_service.dart';
+import 'firebase_options.dart'; // You'll need to generate this
 
-void main() {
-  runApp(const SmartLedger());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+  runApp(const MyApp());
 }
 
-class SmartLedger extends StatefulWidget {
-  const SmartLedger({super.key});
+class MyApp extends StatefulWidget {
+  const MyApp({super.key});
 
   @override
-  State<SmartLedger> createState() => _SmartLedgerState();
+  State<MyApp> createState() => _MyAppState();
 }
 
-class _SmartLedgerState extends State<SmartLedger> {
-  ThemeMode _themeMode = ThemeMode.system;
+class _MyAppState extends State<MyApp> {
+  ThemeMode _themeMode = ThemeMode.light;
 
   void toggleTheme(ThemeMode themeMode) {
     setState(() {
@@ -24,13 +32,28 @@ class _SmartLedgerState extends State<SmartLedger> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Smart Ledger',
-      theme: AppTheme.lightTheme,
-      darkTheme: AppTheme.darkTheme,
-      themeMode: _themeMode,
-      home: HomeScreen(toggleTheme: toggleTheme),
-      debugShowCheckedModeBanner: false,
+    return StreamProvider<User?>.value(
+      initialData: null,
+      value: AuthService().user,
+      child: MaterialApp(
+        title: 'Smart Ledger',
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.blue,
+            brightness: Brightness.light,
+          ),
+        ),
+        darkTheme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSeed(
+            seedColor: Colors.blue,
+            brightness: Brightness.dark,
+          ),
+        ),
+        themeMode: _themeMode,
+        home: AuthWrapper(toggleTheme: toggleTheme),
+      ),
     );
   }
 }

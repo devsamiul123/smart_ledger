@@ -75,7 +75,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                       ),
                     );
                   },
-                  icon: const Icon(Icons.add_shopping_cart),
+                  icon: const Icon(Icons.add_shopping_cart, color: Colors.white,),
                   label: const Text('Place New Order'),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurpleAccent,
