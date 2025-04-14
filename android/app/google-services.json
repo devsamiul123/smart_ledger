@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "303897577491",
+    "project_id": "smart-ledger-7bbf9",
+    "storage_bucket": "smart-ledger-7bbf9.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:303897577491:android:8f93a0e0da50f49a5397e6",
+        "android_client_info": {
+          "package_name": "com.example.smart_ledger"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBMa6zK_KjWP6Gu-HeLTCeEohAcQvWLfkg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
