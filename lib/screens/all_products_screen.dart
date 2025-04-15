@@ -91,6 +91,16 @@ class _AllProductsScreenState extends State<AllProductsScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Product ID: ${product.id}',
+                              style: const TextStyle(fontSize: 16),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 8),
                         Text(
                           product.productName,
                           style: const TextStyle(
