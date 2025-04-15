@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:smart_ledger/services/api_service.dart';
 
+import 'all_customers_screen.dart';
+
 class AddCustomerScreen extends StatefulWidget {
   const AddCustomerScreen({super.key});
 
@@ -43,7 +45,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
           ),
         );
 
-        Navigator.pop(context);
+        // Navigator.pop(context);
+        // Clear form fields
+        _customerNameController.clear();
+        _mobileNoController.clear();
       } catch (e) {
         setState(() {
           _isLoading = false;
@@ -57,6 +62,10 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
             backgroundColor: Colors.red,
           ),
         );
+      } finally {
+        setState(() {
+          _isLoading = false;
+        });
       }
     }
   }
@@ -121,6 +130,21 @@ class _AddCustomerScreenState extends State<AddCustomerScreen> {
                   child: CircularProgressIndicator(strokeWidth: 2),
                 )
                     : const Text('Add Customer'),
+              ),
+              const SizedBox(height: 16),
+              OutlinedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => const AllCustomersScreen(),
+                    ),
+                  );
+                },
+                child: const Text('Show All Customers'),
+                style: OutlinedButton.styleFrom(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                ),
               ),
             ],
           ),

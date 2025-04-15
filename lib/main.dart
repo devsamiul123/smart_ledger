@@ -37,6 +37,7 @@ class _MyAppState extends State<MyApp> {
       value: AuthService().user,
       child: MaterialApp(
         title: 'Smart Ledger',
+        debugShowCheckedModeBanner: false,
         theme: ThemeData(
           useMaterial3: true,
           colorScheme: ColorScheme.fromSeed(
